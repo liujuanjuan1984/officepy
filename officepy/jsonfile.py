@@ -1,6 +1,7 @@
 import os
 import json
 import datetime
+import numpy as np
 
 
 class MyEncoder(json.JSONEncoder):
@@ -11,7 +12,7 @@ class MyEncoder(json.JSONEncoder):
             return float(obj)
         elif isinstance(obj, np.ndarray):
             return obj.tolist()
-        if isinstance(obj, time):
+        if isinstance(obj, datetime.datetime):
             return obj.__str__()
         else:
             return super(NpEncoder, self).default(obj)
@@ -33,7 +34,7 @@ class JsonFile:
             with open(self.filepath, "r", encoding="utf-8") as f:
                 return json.load(f)
         except Exception as e:
-            raise ValueError(f"{self.filepath}\n{e}")
+            raise ValueError(f"{self.filepath} {e}")
 
     def write(self, data, indent=1, is_cover=True):
 
@@ -46,8 +47,8 @@ class JsonFile:
                 json.dump(data, f, indent=indent, sort_keys=False, ensure_ascii=False)
             except:
                 json.dump(
-                    filedata,
-                    __f,
+                    data,
+                    f,
                     indent=indent,
                     sort_keys=False,
                     ensure_ascii=False,

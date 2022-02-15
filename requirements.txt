@@ -4,3 +4,4 @@ pytesseract
 black
 pillow
 pytest
+numpy
