@@ -11,8 +11,16 @@ class TestCase:
 
         Dir(path).check()
         Dir(path).black()
-        for i in Dir(path).search_files_by_types(".py"):
-            print(i)
+        pys = Dir(path).search_files_by_types(".py")
+        print(pys)
+
+    def test_file(self):
+        from officepy import File
+
+        data = File("temp.json").read()
+        File("temp.json").write(data)
+        data = File("temp.json").readlines()
+        File("temp.json").writelines(data)
 
     def test_jsonfile(self):
         from officepy import JsonFile
@@ -22,13 +30,22 @@ class TestCase:
         JsonFile("temp.json").write(data)
         JsonFile("temp.json").rewrite()
 
-    def test_update(self):
+    def test_img(self):
         """update local officepy to HEAD version"""
-        from config import Config
+        from officepy import Img
 
-        os.system(f"cd {Config.OFFICEPY_DIR}")
-        os.system("git pull origin main")
-        os.system("git pull origin main")
-        os.system("git pull origin main")
-        print(Config.BASE_DIR)
-        print(Config.OFFICEPY_DIR)
+        Img()
+
+    def test_stime(self):
+        from officepy import Stime
+
+        Stime().ts2datetime(1644992740511809600)
+
+    def test_ipynbfile(self):
+        """update local officepy to HEAD version"""
+        from officepy import IpynbFile
+
+        filepath = (
+            r"D:\Jupyter\my_repos\common_python_code\Python_requests_examples.ipynb"
+        )
+        IpynbFile(filepath).to_md()

@@ -1,16 +1,25 @@
 """自定义封装的特殊用途的 时间/日期相关方法"""
 
 import time
-from datetime import datetime, timedelta
+import datetime
+
+
+class Stime:
+    def ts2datetime(self, timestamp):
+        ts = int(timestamp)
+        n = 10 ** (len(str(ts)) - 10)
+        return datetime.datetime.fromtimestamp(int(ts / n))
 
 
 def daysdelta(from_datetime_day, days: int = 0):
-    return (datetime_day + timedelta(days=days)).date()
+    return (datetime_day + datetime.timedelta(days=days)).date()
 
 
 def somedays_later_bystr(datestr, n):
     """传入字符串日期 2021-05-01 和 间隔几天，得到几天后的日期值（str）"""
-    return str(datetime.strptime(datestr, "%Y-%m-%d").date() + timedelta(days=n))
+    return str(
+        datetime.strptime(datestr, "%Y-%m-%d").date() + datetime.timedelta(days=n)
+    )
 
 
 def timestamp_to_str(timestamp):

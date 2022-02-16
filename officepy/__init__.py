@@ -6,6 +6,7 @@ from .csvfile import CsvFile
 from .jsonlist import JsonList
 from .imgfile import Img
 from .scrawler import Scrawler
+from .stime import Stime
 
 __all__ = [
     "Dir",
@@ -16,4 +17,5 @@ __all__ = [
     "JsonList",
     "Img",
     "Scrawler",
+    "Stime",
 ]
