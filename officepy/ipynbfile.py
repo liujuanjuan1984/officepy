@@ -12,14 +12,14 @@ class IpynbFile(JsonFile):
         if not self.filepath.endswith(".ipynb"):
             raise ValueError(f"{filepath}\n not .ipynb file")
 
-        data = self.read()
+        data = self.read({})
         try:
             language = data["metadata"]["language_info"]["name"]
         except:
             language = "text"
 
         datastr = ""
-        for cell in data["cells"]:
+        for cell in data.get("cells") or []:
             if cell["cell_type"] == "code":
                 datastr += f"```{language}\n" + "".join(cell["source"]) + "\n```\n\n"
                 if is_output:  # 运行结果导出不够全面完整

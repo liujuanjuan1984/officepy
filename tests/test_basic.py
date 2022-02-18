@@ -16,11 +16,24 @@ class TestCase:
 
     def test_file(self):
         from officepy import File
+        from officepy import IpynbFile
 
-        data = File("temp.json").read()
-        File("temp.json").write(data)
-        data = File("temp.json").readlines()
-        File("temp.json").writelines(data)
+        notes_dir = os.path.join(os.path.dirname(__file__), "..", "notes")
+
+        xfile = os.path.join(notes_dir, "Python_requests_examples.md")
+        yfile = os.path.join(notes_dir, "Python_requests_examples.ipynb")
+        data = File(xfile).read()
+        File(xfile).write(data)
+        data = File(xfile).readlines()
+        File(xfile).writelines(data)
+
+        File(xfile).zh_format()
+        File(xfile).quote_json_format()
+
+        # File(xfile).change_filetype(".md", ".txt")
+        IpynbFile(yfile).to_md()
+
+        # File(xfile).copy_file_to_other_type(".md", ".log")
 
     def test_jsonfile(self):
         from officepy import JsonFile
@@ -40,12 +53,3 @@ class TestCase:
         from officepy import Stime
 
         Stime().ts2datetime(1644992740511809600)
-
-    def test_ipynbfile(self):
-        """update local officepy to HEAD version"""
-        from officepy import IpynbFile
-
-        filepath = (
-            r"D:\Jupyter\my_repos\common_python_code\Python_requests_examples.ipynb"
-        )
-        IpynbFile(filepath).to_md()
