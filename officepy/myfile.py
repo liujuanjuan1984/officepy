@@ -68,6 +68,12 @@ class File:
     def zh_format(self):
         """中文排版优化"""
         data = self.read()
+        data = self.zh_format_text(data)
+        self.write(data)
+
+    @classmethod
+    def zh_format_text(cls, data):
+        """中文排版优化"""
 
         # 中文和英文、数字之间应有空格
         data = re.sub(r"([\u4e00-\u9fa5])([\da-zA-Z])", r"\1 \2", data)
@@ -79,8 +85,7 @@ class File:
         # 文件首尾的多余换行
         data = re.sub(r"^[\n ]+", r"", data)
         data = re.sub(r"[\n ]+$", r"", data)
-
-        self.write(data)
+        return data
 
     def quote_json_format(self):
         """对 markdown 文件中所引用的 json 数据予以规范排版"""
