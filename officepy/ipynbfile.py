@@ -3,6 +3,12 @@ from .jsonfile import JsonFile
 
 
 class IpynbFile(JsonFile):
+    """About .ipynb file. A filetype like .json for jupyter notebook.
+
+    Args:
+        JsonFile (class obj): class of .json file.
+    """
+
     def to_md(self, markdown_filepath=None, is_output=False):
         """
         output ipynbfile to markdown file

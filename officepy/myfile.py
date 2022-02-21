@@ -2,12 +2,17 @@ import json
 import os
 import re
 from .jsonfile import JsonFile
+from typing import List, Dict
 
 
 class File:
-    """文件"""
+    """Methods for a file."""
 
-    def __init__(self, filepath):
+    def __init__(self, filepath: str):
+        """
+        Args:
+            filepath (str): the path of file.
+        """
         self.filepath = filepath
 
     def read(self):
@@ -15,7 +20,7 @@ class File:
             filedata = f.read()
         return filedata
 
-    def write(self, filedata, mode="w", is_print=True):
+    def write(self, filedata: str, mode: str = "w", is_print: bool = True):
         with open(self.filepath, mode, encoding="utf-8") as f:
             f.write(filedata)
         if is_print:
@@ -26,7 +31,7 @@ class File:
             lines = f.readlines()
         return lines
 
-    def writelines(self, lines, mode="w", is_print=True):
+    def writelines(self, lines: List, mode: str = "w", is_print: bool = True):
         with open(self.filepath, mode, encoding="utf-8") as f:
             f.writelines(lines)
         if is_print:
@@ -65,15 +70,18 @@ class File:
             self.writelines(gitclis)
         os.system(self.filepath)
 
-    def zh_format(self):
-        """中文排版优化"""
-        data = self.read()
-        data = self.zh_format_text(data)
-        self.write(data)
-
     @classmethod
-    def zh_format_text(cls, data):
-        """中文排版优化"""
+    def zh_format_text(cls, data: str) -> str:
+        """format for zh-text.
+
+        a classmethod. use as: `File.zh_format_text(data)`
+
+        Args:
+            data (str): the data with zh(Chinese Words).
+
+        Returns:
+            str: the data formated.
+        """
 
         # 中文和英文、数字之间应有空格
         data = re.sub(r"([\u4e00-\u9fa5])([\da-zA-Z])", r"\1 \2", data)
@@ -87,11 +95,27 @@ class File:
         data = re.sub(r"[\n ]+$", r"", data)
         return data
 
-    def quote_json_format(self):
-        """对 markdown 文件中所引用的 json 数据予以规范排版"""
+    def zh_format(self):
+        """format for file with zh-text.
 
+        File(filepath).zh_format()
+        """
         data = self.read()
+        data = self.zh_format_text(data)
+        self.write(data)
 
+    @classmethod
+    def quote_json_format_text(cls, data: str) -> str:
+        """format data with json-quoted. only json-quoted  was formated.
+
+        classmethod.use as `data = File.quote_json_format_text(data)`.
+
+        Args:
+            data (str): the data with json-quoted  need to format.
+
+        Returns:
+            str: the data with json-quoted   formated.
+        """
         tp = r"\n```json\n+([\s\S]+?)```"
         rs = re.findall(tp, data)
         for i in rs:
@@ -103,5 +127,12 @@ class File:
             except Exception as e:
                 print(i)
                 print(e)
+        return data
+
+    def quote_json_format(self):
+        """format file with json-quoted data."""
+
+        data = self.read()
+        data = self.quote_json_format_text(data)
         self.write(data)
         self.zh_format()

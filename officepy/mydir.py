@@ -4,13 +4,22 @@ from .jsonfile import JsonFile
 
 
 class Dir:
-    """文件夹"""
+    """About dir."""
 
     def __init__(self, dirpath):
+        """
+
+        Args:
+            dirpath (str): the path of the dir.
+        """
         self.dirpath = dirpath
 
     def check(self, tododir=None):
-        """检查文件夹是否存在；如果不存在则创建文件夹，可以逐层创建"""
+        """check the dirpath exists and create it if not.
+
+        Args:
+            tododir (str, optional): the dirpath to check. Defaults to self.dirpath.
+        """
         dirpath = tododir or self.dirpath
         if not os.path.exists(dirpath):
             os.makedirs(dirpath)

@@ -3,9 +3,9 @@ from .myfile import File
 from .jsonfile import JsonFile
 from .ipynbfile import IpynbFile
 from .csvfile import CsvFile
-from .jsonlist import JsonList
 from .imgfile import Img
 from .scrawler import Scrawler
+from .jsonlist import JsonList
 from .stime import Stime
 
 __all__ = [
@@ -14,8 +14,8 @@ __all__ = [
     "JsonFile",
     "IpynbFile",
     "CsvFile",
-    "JsonList",
     "Img",
+    "JsonList",
     "Scrawler",
     "Stime",
 ]

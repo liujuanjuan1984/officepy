@@ -19,6 +19,8 @@ class MyEncoder(json.JSONEncoder):
 
 
 class JsonFile:
+    """About .json file."""
+
     def __init__(self, filepath):
         self.filepath = filepath
 

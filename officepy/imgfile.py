@@ -4,7 +4,7 @@ from PIL import Image
 
 
 class Img:
-    """图片识别为文本数据"""
+    """About image file."""
 
     def __init__(self, filepath=None):
         self.filepath = filepath
