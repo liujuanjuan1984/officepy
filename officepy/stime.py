@@ -2,40 +2,37 @@
 
 import time
 import datetime
+import re
 
 
 class Stime:
+    @classmethod
     def ts2datetime(self, timestamp):
         ts = int(timestamp)
         n = 10 ** (len(str(ts)) - 10)
         return datetime.datetime.fromtimestamp(int(ts / n))
 
+    @classmethod
+    def days_later(cls, day, n):
+        """传入字符串日期 2021-05-01 和 间隔几天，得到几天后的日期值（str）"""
+        if type(day) == str:
+            day = re.sub(r"^(\d+)(\D)(\d+)(\D)(\d+)$", r"\1-\3-\5", day).split(" ")[0]
+            day = datetime.datetime.strptime(day, "%Y-%m-%d")
+        if type(day) == datetime.datetime:
+            later = day.date() + datetime.timedelta(days=n)
+        elif type(day) == datetime.date:
+            later = day + datetime.timedelta(days=n)
+        else:
+            raise ValueError(
+                day, "param type must be datetime.datetime datetime.date or string."
+            )
+        return later
 
-def daysdelta(from_datetime_day, days: int = 0):
-    return (datetime_day + datetime.timedelta(days=days)).date()
-
-
-def somedays_later_bystr(datestr, n):
-    """传入字符串日期 2021-05-01 和 间隔几天，得到几天后的日期值（str）"""
-    return str(
-        datetime.strptime(datestr, "%Y-%m-%d").date() + datetime.timedelta(days=n)
-    )
-
-
-def timestamp_to_str(timestamp):
-    """把 rum 中的时间戳（纳米级）转换为年月日时分秒的字符串"""
-    timeArray = time.localtime(int(timestamp / 1000000000))
-    strtime = time.strftime("%Y-%m-%d %H:%M:%S", timeArray)
-    # 另一种实现方式
-    # dateArray = datetime.utcfromtimestamp(int(timestamp / 1000000000)
-    # otherStyleTime = dateArray.strftime("%Y-%m-%d %H:%M:%S")
-    return strtime
-
-
-def time2str():
-    """根据当前时间，得到时间信息的字符串，通常用于文件命名"""
-    s = f"{str(datetime.now())[:19].replace(' ','_').replace(':','').replace('-','')}"
-    return s
+    @classmethod
+    def time2str(cls):
+        """根据当前时间，得到时间信息的字符串，通常用于文件命名"""
+        s = f"{str(datetime.datetime.now())[:19].replace(' ','_').replace(':','').replace('-','')}"
+        return s
 
 
 def countdown_to_ends(endsname, endsday):
@@ -44,7 +41,7 @@ def countdown_to_ends(endsname, endsday):
     endsname 如何称呼那个终点？比如新年，“80岁”
     endsday "2064-10-05 00:00:00"
     """
-    cd = datetime.strptime(endsday, "%Y-%m-%d %H:%M:%S") - datetime.now()
+    cd = datetime.datetime.strptime(endsday, "%Y-%m-%d %H:%M:%S") - datetime.now()
     if cd.days < 0:
         return
     if cd.days >= 365:
@@ -64,7 +61,7 @@ def passed_percent(start, days):
     start:str,start_day,like 2022-01-01
     days:int,时间段的总天数
     """
-    n = datetime.now() - datetime.strptime(start, "%Y-%m-%d")
+    n = datetime.datetime.now() - datetime.datetime.strptime(start, "%Y-%m-%d")
     return (24 * 60 * n.days + n.seconds / 60) / (days * 24 * 60)
 
 

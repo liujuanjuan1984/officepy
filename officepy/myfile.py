@@ -1,7 +1,6 @@
 import json
 import os
 import re
-from .jsonfile import JsonFile
 from typing import List, Dict
 
 
@@ -116,6 +115,9 @@ class File:
         Returns:
             str: the data with json-quoted   formated.
         """
+
+        from .jsonfile import JsonFile
+
         tp = r"\n```json\n+([\s\S]+?)```"
         rs = re.findall(tp, data)
         for i in rs:

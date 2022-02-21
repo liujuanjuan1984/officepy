@@ -24,7 +24,6 @@ class Dir:
         if not os.path.exists(dirpath):
             os.makedirs(dirpath)
 
-    @property
     def get_subdirs(self, tododir=None):
         """获取 dirpath 下的首层文件夹"""
         dirpath = tododir or self.dirpath
@@ -35,6 +34,19 @@ class Dir:
             if os.path.isdir(idir):
                 rlt.append(idir)
         return rlt
+
+    def get_subdirs_for_livebooks(self, tododir=None):
+        """get_subdirs 针对 live books 的特殊封装：本地 live books 对书籍进行了二次分组，并用 sub_ 来标记分组"""
+
+        tododir = tododir or self.dirpath
+        subdirs = []
+        for i in self.get_subdirs(tododir):
+            # todo: more pythonic.
+            if i.split("\\")[-1].startswith("sub_"):
+                subdirs.extend(self.get_subdirs(i))
+            else:
+                subdirs.append(i)
+        return subdirs
 
     def search_files_by_types(self, filetypes) -> List:
         """搜索文件夹中指定类型的文件，返回文件的绝对路径构成的列表"""

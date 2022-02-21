@@ -1,12 +1,27 @@
 """常用函数方法"""
 
 
+import webbrowser as web
+from datetime import datetime, timedelta
+from urllib.request import urlretrieve
+
+
 def open_urls(*urls):
     """打开一组 url，调用时可以单个变量 open_urls(url)，也可以 open_urls(*urls) 其中 urls 为一个序列"""
     import webbrowser as web
 
     for url in urls:
         web.open(url)
+
+
+def open_questions(qids):
+    """打开一组 xue.cn 习题id的习题独立页"""
+    urls = init_urls_by_qids(*qids)
+    open_urls(*urls)
+
+
+def init_urls_by_qids(*qids):
+    return [f"https://xue.cn/hub/app/exercise/{qid}" for qid in qids]
 
 
 def download_files(imgdir, *urls):

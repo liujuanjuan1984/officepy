@@ -51,5 +51,13 @@ class TestCase:
 
     def test_stime(self):
         from officepy import Stime
+        import datetime
 
-        Stime().ts2datetime(1644992740511809600)
+        Stime.ts2datetime(1644992740511809600)
+        Stime.ts2datetime(1644992740511809)
+        Stime.ts2datetime(1644992740511)
+        Stime.ts2datetime(1644992740)
+
+        rlt = Stime.days_later("2021-01-01", 1)
+        rlt = Stime.days_later(datetime.datetime.now(), 1)
+        rlt = Stime.days_later(datetime.date.today(), 1)
