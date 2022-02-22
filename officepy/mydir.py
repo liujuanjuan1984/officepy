@@ -1,4 +1,5 @@
 import os
+import zipfile
 from typing import List, Dict
 from .jsonfile import JsonFile
 
@@ -88,4 +89,31 @@ class Dir:
         """重新读写文件，包括ipynb文件和xue.cn.json文件"""
 
         for i in self.search_files_by_types(filetypes):
-            JsonFile(i).rewrite()
+            if i.find("checkpoint") == -1:
+                JsonFile(i).rewrite()
+
+    def zip(self, to_zipfile, mode=None, not_dirname=None, not_filetype=None):
+        """Open the ZIP file with mode read 'r', write 'w', exclusive create 'x',or append 'a'."""
+        not_dirname = not_dirname or [
+            "__pycache__",
+            ".pytest_cache",
+            ".git",
+        ]
+        not_filetype = not_filetype or (".7z", ".db", ".zip")
+        mode = mode or "a"
+
+        zf = zipfile.ZipFile(to_zipfile, mode)
+        self.__zip_add_file(self.dirpath, zf, not_dirname, not_filetype)
+        zf.close()
+
+    def __zip_add_file(self, path, zf, not_dirname, not_filetype):
+        for subpath in os.listdir(path):
+            if subpath in not_dirname:
+                continue
+            subpath = os.path.join(path, subpath)
+            if os.path.isfile(subpath):
+                if not subpath.endswith(not_filetype):
+                    zf.write(subpath)
+            elif os.path.isdir(subpath):
+                zf.write(subpath)
+                self.__zip_add_file(subpath, zf, not_dirname, not_filetype)

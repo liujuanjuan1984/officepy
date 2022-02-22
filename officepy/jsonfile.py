@@ -2,6 +2,7 @@ import os
 import json
 import datetime
 import numpy as np
+from .jsonlist import JsonList
 
 
 class MyEncoder(json.JSONEncoder):

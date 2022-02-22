@@ -1,6 +1,7 @@
 import json
 import os
 import re
+import zipfile
 from typing import List, Dict
 
 
@@ -123,7 +124,7 @@ class File:
         for i in rs:
             try:
                 ix = json.loads(i)
-                JsonFile("temp.json").write(ix, indent=4, is_print=False)
+                JsonFile("temp.json").write(ix, indent=4)
                 ix = File("temp.json").read()
                 data = data.replace(i, str(ix).replace("'", '"') + "\n")
             except Exception as e:
@@ -138,3 +139,9 @@ class File:
         data = self.quote_json_format_text(data)
         self.write(data)
         self.zh_format()
+
+    def zip(self, to_zipfile=None, mode="w"):
+        to_zipfile = to_zipfile or os.path.join(self.filepath, ".zip")
+        zf = zipfile.ZipFile(to_zipfile, mode)
+        zf.write(self.filepath)
+        zf.close()

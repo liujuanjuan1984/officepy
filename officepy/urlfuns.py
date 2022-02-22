@@ -2,7 +2,7 @@
 
 
 import webbrowser as web
-from datetime import datetime, timedelta
+import datetime
 from urllib.request import urlretrieve
 
 
