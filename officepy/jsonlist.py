@@ -1,6 +1,3 @@
-import pandas as pd
-
-
 class JsonList:
     """自定义数据类型，由字典 item 构成 的列表"""
 
@@ -34,6 +31,7 @@ class JsonList:
 
     def find_values_by_idkey(self, idkey, jsonlist=None):
         """从jsonlist中，读取idkey的值，构成列表"""
+        import pandas as pd
 
         if jsonlist == None:
             jsonlist = self.jsonlist

@@ -1,7 +1,6 @@
 import json
 import os
 import re
-import zipfile
 from typing import List, Dict
 
 
@@ -141,7 +140,9 @@ class File:
         self.zh_format()
 
     def zip(self, to_zipfile=None, mode="w"):
-        to_zipfile = to_zipfile or os.path.join(self.filepath, ".zip")
-        zf = zipfile.ZipFile(to_zipfile, mode)
-        zf.write(self.filepath)
+        import zipfile
+
+        to_zipfile = to_zipfile or os.path.join(self.filepath, "_.zip")
+        zf = zipfile.ZipFile(to_zipfile, mode, zipfile.ZIP_DEFLATED)
+        zf.write(self.filepath, arcname=os.path.basename(self.filepath))
         zf.close()

@@ -1,5 +1,4 @@
 import os
-import zipfile
 from typing import List, Dict
 from .jsonfile import JsonFile
 
@@ -94,6 +93,8 @@ class Dir:
 
     def zip(self, to_zipfile, mode=None, not_dirname=None, not_filetype=None):
         """Open the ZIP file with mode read 'r', write 'w', exclusive create 'x',or append 'a'."""
+        import zipfile
+
         not_dirname = not_dirname or [
             "__pycache__",
             ".pytest_cache",

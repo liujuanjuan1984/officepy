@@ -1,5 +1,4 @@
 import os
-import pytesseract
 from PIL import Image
 
 
@@ -32,6 +31,8 @@ class Img:
         return imgdata
 
     def get_img_content(self):
+        import pytesseract
+
         try:
             img = Image.open(self.filepath)
             content = pytesseract.image_to_string(img)

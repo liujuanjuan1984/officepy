@@ -1,7 +1,6 @@
 import os
 import re
 import copy
-import html2text
 from .celllines import CellLines
 from .myfile import File
 from .jsonfile import JsonFile

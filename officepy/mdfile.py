@@ -1,7 +1,6 @@
 import os
 import re
 import copy
-import html2text
 from .myfile import File
 from .jsonfile import JsonFile
 
@@ -17,6 +16,8 @@ class MdFile(File):
 
     def html2md(self):
         """将一个 html 文件转为 md 文件"""
+        import html2text
+
         data = html2text.html2text(self.filedata)
         self.filepath = self.filepath.rsplit(".", 1)[0] + ".md"
         self.write(data)

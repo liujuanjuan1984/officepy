@@ -5,3 +5,5 @@ black
 pillow
 pytest
 numpy
+html2text
+zipfile

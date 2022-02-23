@@ -1,12 +1,13 @@
 import os
 import json
 import datetime
-import numpy as np
 from .jsonlist import JsonList
 
 
 class MyEncoder(json.JSONEncoder):
     def default(self, obj):
+        import numpy as np
+
         if isinstance(obj, np.integer):
             return int(obj)
         elif isinstance(obj, np.floating):

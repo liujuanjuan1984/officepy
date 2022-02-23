@@ -1,9 +1,4 @@
-"""常用函数方法"""
-
-
-import webbrowser as web
 import datetime
-from urllib.request import urlretrieve
 
 
 def open_urls(*urls):
@@ -26,7 +21,6 @@ def init_urls_by_qids(*qids):
 
 def download_files(imgdir, *urls):
     """批量下载，可下载 url 文件或图片"""
-    from Dir import Dir
     from urllib.request import urlretrieve
 
     # 检查文件夹是否存在
@@ -59,6 +53,8 @@ def init_urls_by_qids(*qids):
 
 def open_chapters(paths):
     """打开一组 xue.cn 章节的独立网页"""
+    import webbrowser as web
+
     booksinfo = JsonFile(FILE_INFO["names"]).read()
     for path in paths:
         bs = path.split("%2F", maxsplit=1)

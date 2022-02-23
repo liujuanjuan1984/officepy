@@ -1,9 +1,8 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-
-
 class Scrawler:
     """基于 selenium 的爬虫，启动 chrome 浏览器，分为可见、无端两种模式"""
+
+    from selenium import webdriver
+    from selenium.webdriver.chrome.options import Options
 
     def __init__(self, mode="light"):
         """
