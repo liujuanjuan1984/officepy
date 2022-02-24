@@ -1,9 +1,6 @@
 class Scrawler:
     """基于 selenium 的爬虫，启动 chrome 浏览器，分为可见、无端两种模式"""
 
-    from selenium import webdriver
-    from selenium.webdriver.chrome.options import Options
-
     def __init__(self, mode="light"):
         """
         1) 参数 mode，默认值为 light，任何其它取值均视为 dark。
@@ -19,6 +16,9 @@ class Scrawler:
             self.driver = self.start_driver_light()
 
     def start_driver_dark(self):
+        from selenium import webdriver
+        from selenium.webdriver.chrome.options import Options
+
         chrome_options = Options()
         chrome_options.add_argument("--headless")
         chrome_options.add_argument("--disable-gpu")
@@ -31,6 +31,8 @@ class Scrawler:
         # chromedriver = 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chromedriver'
         # driver = webdriver.Chrome(chromedriver)
         # 如果设置好环境变量，就不需要指定了
+        from selenium import webdriver
+
         driver = webdriver.Chrome()
         return driver
 
