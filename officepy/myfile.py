@@ -146,3 +146,48 @@ class File:
         zf = zipfile.ZipFile(to_zipfile, mode, zipfile.ZIP_DEFLATED)
         zf.write(self.filepath, arcname=os.path.basename(self.filepath))
         zf.close()
+
+    def split(self, size=256):
+        """split big file to small files.
+
+        Args:
+            size (int, optional): Each small file defaults to 256 Mb.
+        """
+
+        from .mydir import Dir
+
+        file_dir, file_name = os.path.split(self.filepath)
+        file_name, file_type = os.path.splitext(file_name)
+        file_dir = os.path.join(file_dir, file_name)
+        Dir(file_dir).check()
+
+        file_num = 0
+        stream = open(self.filepath, "rb")
+
+        while True:
+            part_file_name = os.path.join(
+                file_dir, f"{file_name}_{file_num}{file_type}"
+            )
+            print(f"split file start {part_file_name}")
+            part_stream = open(part_file_name, "wb")
+
+            read_count = 0
+            read_size = 1024 * 1024 * size
+
+            while True:
+                read_content = stream.readline()
+                if not read_content:
+                    print("split done")
+                    return
+                read_count_per = len(read_content)
+
+                if read_count_per > 0:
+                    part_stream.write(read_content)
+                else:
+                    break
+
+                read_count += read_count_per
+                if read_count > read_size:
+                    break
+            part_stream.close()
+            file_num += 1
