@@ -1,29 +1,29 @@
 import os
 from officepy import File
 
-reponames = ["officepy", "seeds", "rumpy", "quorum_binary"]
 
-lines = []
-this_dir = os.path.dirname(__file__)
-home_dir = os.path.dirname(os.path.dirname(this_dir))
+def main():
+    reponames = ["officepy", "seeds", "rumpy", "quorum_binary","coin_price"]
 
-
-def clone():
+    lines = []
+    this_dir = os.path.dirname(__file__)
+    home_dir = os.path.dirname(os.path.dirname(this_dir))
+    
     for name in reponames:
-        line = f"git clone https://github.com/liujuanjuan1984/{name}\n"
+        this_repo = os.path.join(home_dir,name)
+        if os.path.exists(this_repo):
+            line = f"cd {this_repo}\n"
+            lines.append(line)
+            lines.append("git pull origin master\n" * 5)
+            lines.append("\n")
+        else:
+            line = f"git clone https://github.com/liujuanjuan1984/{name}\n"
         lines.append(line * 5)
         lines.append("\n")
 
 
-def pull():
-    for name in reponames:
-        line = f"cd {os.path.join(home_dir,name)}\n"
-        lines.append(line)
-        lines.append("git pull origin master\n" * 5)
-        lines.append("\n")
+    batfile = os.path.join(os.path.dirname(__file__), "gitit.bat")
+    File(batfile).writelines(lines)
 
-
-# clone()
-pull()
-batfile = os.path.join(os.path.dirname(__file__), "gitit.bat")
-File(batfile).writelines(lines)
+if __name__ == "__main__":
+    main()
