@@ -34,52 +34,54 @@ class Stime:
         s = f"{str(datetime.datetime.now())[:19].replace(' ','_').replace(':','').replace('-','')}"
         return s
 
+    @classmethod
+    def countdown_to_ends(cls, endsname, endsday):
+        """
+        距离 endsday 的剩余时间
+        endsname 如何称呼那个终点？比如新年，“80岁”
+        endsday "2064-10-05 00:00:00"
+        """
+        cd = datetime.datetime.strptime(endsday, "%Y-%m-%d %H:%M:%S") - datetime.now()
+        if cd.days < 0:
+            return
+        if cd.days >= 365:
+            rlt = f"距离 {endsname} {endsday[:10]}\n还剩 {cd.days//365} 年 {cd.days%365} 天"
+        elif cd.days >= 7:
+            rlt = f"距离 {endsname} {endsday[:10]}\n还剩 {cd.days//7} 周 {cd.days%7} 天"
+        elif cd.days >= 3:
+            rlt = f"距离 {endsname} {endsday}\n还剩 {cd.days} 天 {cd.seconds//3600} 时"
+        elif cd.days > 0 or cd.seconds > 0:
+            rlt = f"距离 {endsname} {endsday}\n还剩 {cd.days*24+cd.seconds//3600} 时 {(cd.seconds%3600)//60} 分"
+        return rlt
 
-def countdown_to_ends(endsname, endsday):
-    """
-    距离 endsday 的剩余时间
-    endsname 如何称呼那个终点？比如新年，“80岁”
-    endsday "2064-10-05 00:00:00"
-    """
-    cd = datetime.datetime.strptime(endsday, "%Y-%m-%d %H:%M:%S") - datetime.now()
-    if cd.days < 0:
-        return
-    if cd.days >= 365:
-        rlt = f"距离 {endsname} {endsday[:10]}\n还剩 {cd.days//365} 年 {cd.days%365} 天"
-    elif cd.days >= 7:
-        rlt = f"距离 {endsname} {endsday[:10]}\n还剩 {cd.days//7} 周 {cd.days%7} 天"
-    elif cd.days >= 3:
-        rlt = f"距离 {endsname} {endsday}\n还剩 {cd.days} 天 {cd.seconds//3600} 时"
-    elif cd.days > 0 or cd.seconds > 0:
-        rlt = f"距离 {endsname} {endsday}\n还剩 {cd.days*24+cd.seconds//3600} 时 {(cd.seconds%3600)//60} 分"
-    return rlt
+    @classmethod
+    def passed_percent(cls, start, days):
+        """
+        计算当前占统计时间段内的百分比
+        start:str,start_day,like 2022-01-01
+        days:int,时间段的总天数
+        """
+        n = datetime.datetime.now() - datetime.datetime.strptime(start, "%Y-%m-%d")
+        return (24 * 60 * n.days + n.seconds / 60) / (days * 24 * 60)
 
-
-def passed_percent(start, days):
-    """
-    计算当前占统计时间段内的百分比
-    start:str,start_day,like 2022-01-01
-    days:int,时间段的总天数
-    """
-    n = datetime.datetime.now() - datetime.datetime.strptime(start, "%Y-%m-%d")
-    return (24 * 60 * n.days + n.seconds / 60) / (days * 24 * 60)
-
-
-def view_percent(text, percent, wide=30, is_line=False, is_squre=True, is_ptext=True):
-    """
-    把百分比转换为可视化进度条字符串
-    text:str,文本
-    percent:float,百分比数
-    wide:进度条宽度
-    is_line:只显示取得的进展，不显示占比
-    is_squre:是否显示进度条
-    is_ptext: 是否显示百分比数值
-    """
-    l = min(int(abs(percent) * wide), wide)
-    if is_line:
-        text += "■" * l  # "❀"
-    if is_squre:
-        text += "■" * l + "□" * (wide - l)
-    if is_ptext:
-        text += f" {round(percent*100,2)}%"
-    return text
+    @classmethod
+    def view_percent(
+        cls, text, percent, wide=30, is_line=False, is_squre=True, is_ptext=True
+    ):
+        """
+        把百分比转换为可视化进度条字符串
+        text:str,文本
+        percent:float,百分比数
+        wide:进度条宽度
+        is_line:只显示取得的进展，不显示占比
+        is_squre:是否显示进度条
+        is_ptext: 是否显示百分比数值
+        """
+        l = min(int(abs(percent) * wide), wide)
+        if is_line:
+            text += "■" * l  # "❀"
+        if is_squre:
+            text += "■" * l + "□" * (wide - l)
+        if is_ptext:
+            text += f" {round(percent*100,2)}%"
+        return text
