@@ -12,16 +12,14 @@ def main():
     for name in reponames:
         this_repo = os.path.join(home_dir, name)
         if os.path.exists(this_repo):
-            line = f"cd {this_repo}\n"
-            lines.append(line)
-            lines.append("git pull origin master\n" * 5)
-            lines.append("\n")
+            line = "git pull origin master\n"
+            lines.extend([f"cd {this_repo}\n", line * 3])
         else:
             line = f"git clone https://github.com/liujuanjuan1984/{name}\n"
-        lines.append(line * 5)
-        lines.append("\n")
+            lines.extend([f"cd {home_dir}\n", line * 3])
 
-    batfile = os.path.join(os.path.dirname(__file__), "gitit.bat")
+    lines.append(f"cd {home_dir}\n")
+    batfile = os.path.join(this_dir, "temp_git_it.bat")
     File(batfile).writelines(lines)
 
 
