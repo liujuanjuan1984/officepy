@@ -4,7 +4,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="officepy",
+    name="officy",
     version="0.0.1",
     author="liujuanjuan1984",
     author_email="qiaoanlu@163.com",
@@ -12,10 +12,10 @@ setuptools.setup(
     keywords=["office"],
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/liujuanjuan1984/officepy",
+    url="https://github.com/liujuanjuan1984/officy",
     project_urls={
-        "Github Repo": "https://github.com/liujuanjuan1984/officepy",
-        "Bug Tracker": "https://github.com/liujuanjuan1984/officepy/issues",
+        "Github Repo": "https://github.com/liujuanjuan1984/officy",
+        "Bug Tracker": "https://github.com/liujuanjuan1984/officy/issues",
     },
     classifiers=[
         "Programming Language :: Python :: 3",

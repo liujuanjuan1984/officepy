@@ -5,7 +5,7 @@ import sys
 
 class TestCase:
     def test_dir(self):
-        from officepy import Dir
+        from officy import Dir
 
         path = os.path.realpath(".")
 
@@ -15,8 +15,8 @@ class TestCase:
         print(pys)
 
     def test_file(self):
-        from officepy import File
-        from officepy import IpynbFile
+        from officy import File
+        from officy import IpynbFile
 
         notes_dir = os.path.join(os.path.dirname(__file__), "..", "notes")
 
@@ -36,7 +36,7 @@ class TestCase:
         # File(xfile).copy_file_to_other_type(".md", ".log")
 
     def test_jsonfile(self):
-        from officepy import JsonFile
+        from officy import JsonFile
 
         data = JsonFile("temp.json").read({})
         data.update({"hi": "hello"})
@@ -44,13 +44,13 @@ class TestCase:
         JsonFile("temp.json").rewrite()
 
     def test_img(self):
-        """update local officepy to HEAD version"""
-        from officepy import Img
+        """update local officy to HEAD version"""
+        from officy import Img
 
         Img()
 
     def test_stime(self):
-        from officepy import Stime
+        from officy import Stime
         import datetime
 
         Stime.ts2datetime(1644992740511809600)

@@ -1,9 +1,9 @@
 import os
-from officepy import File
+from officy import File
 
 
 def main():
-    reponames = ["officepy", "seeds", "rumpy", "quorum_binary", "coin_price"]
+    reponames = ["officy", "seeds", "rumpy", "quorum_binary", "coin_price"]
 
     lines = []
     this_dir = os.path.dirname(__file__)

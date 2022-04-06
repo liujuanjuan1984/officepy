@@ -1,4 +1,4 @@
-# officepy
+# officy
 
 common python code for office use. like dir,file,etc.
 
@@ -7,7 +7,7 @@ common python code for office use. like dir,file,etc.
 ### Install:
 
 ```sh
-pip install officepy
+pip install officy
 ```
 
 or :
@@ -16,14 +16,14 @@ or :
 pip install -r requirements.txt
 ```
 
-如果您有需要，可以 clone 到本地，比如，在 `/work-space>` 下执行 ```git clone https://github.com/liujuanjuan1984/officepy.git```。
+如果您有需要，可以 clone 到本地，比如，在 `/work-space>` 下执行 ```git clone https://github.com/liujuanjuan1984/officy.git```。
 
-完成后，`cd officepy` 后所在目录/路径，请添加到 `PYTHONPATH` 环境变量中。
+完成后，`cd officy` 后所在目录/路径，请添加到 `PYTHONPATH` 环境变量中。
 
 ### How to use:
 
 ```py
-from officepy import Dir,JsonFile
+from officy import Dir,JsonFile
 Dir(".").black()
 JsonFile("temp.json").read({})
 ```
