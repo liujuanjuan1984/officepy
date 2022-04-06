@@ -22,3 +22,6 @@ __all__ = [
     "Scrawler",
     "Stime",
 ]
+
+__author__ = "liujuanjuan1984"
+__version__ = "0.0.1"
