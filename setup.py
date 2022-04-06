@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="officy",
-    version="0.0.1",
+    version="0.0.2",
     author="liujuanjuan1984",
     author_email="qiaoanlu@163.com",
     description="common python code for office use. like dir,file,etc.",
@@ -25,15 +25,5 @@ setuptools.setup(
     package_dir={"": "src"},
     packages=setuptools.find_packages(where="src"),
     python_requires=">=3.6",
-    install_requires=[
-        "pandas",
-        "selenium",
-        "pytesseract",
-        "black",
-        "pillow",
-        "pytest",
-        "numpy",
-        "html2text",
-        "zipfile",
-    ],
+    install_requires=[],
 )
