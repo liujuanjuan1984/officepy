@@ -35,6 +35,8 @@ class TestCase:
 
         # File(xfile).copy_file_to_other_type(".md", ".log")
 
+        print(File("__init__.py").size())
+
     def test_jsonfile(self):
         from officy import JsonFile
 

@@ -191,3 +191,15 @@ class File:
                     break
             part_stream.close()
             file_num += 1
+
+    def size(self, n=2, d=2):
+        """获取文件大小
+        n: 默认为2，取0为b，取1为Kb，取2为Mb，取3为Gb
+        d：decimal 小数位，默认为2"""
+        return round(os.path.getsize(self.filepath) / (1024 **n), d)
+
+
+if __name__ == "__main__":
+    print(File(__file__).size())
+    print(File(__file__).size(n=0))
+    print(File(__file__).size(n=3,d=5))
