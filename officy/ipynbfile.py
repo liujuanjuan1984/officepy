@@ -1,9 +1,10 @@
+import copy
 import os
 import re
-import copy
-from .celllines import CellLines
-from .myfile import File
-from .jsonfile import JsonFile
+
+from officy.celllines import CellLines
+from officy.jsonfile import JsonFile
+from officy.myfile import File
 
 
 class IpynbFile(JsonFile):
@@ -48,7 +49,12 @@ class IpynbFile(JsonFile):
             return print(f"无法执行：文件类型不合法")
         if len(cells) == 0 and dontzero:
             return print(f"无法执行：cells 数据为空")
-        ipynbdata = {"cells": cells, "metadata": {}, "nbformat": 4, "nbformat_minor": 2}
+        ipynbdata = {
+            "cells": cells,
+            "metadata": {},
+            "nbformat": 4,
+            "nbformat_minor": 2,
+        }
         self.write(ipynbdata)
 
     def check_title(self, n):
@@ -135,7 +141,11 @@ class IpynbFile(JsonFile):
                 __newcells.append(__cell)
             elif __cell["cell_type"] == "markdown":
                 __lines = __cell["source"]
-                __icell = {"cell_type": "markdown", "metadata": {}, "source": []}
+                __icell = {
+                    "cell_type": "markdown",
+                    "metadata": {},
+                    "source": [],
+                }
                 __ilines = []
                 for l in __lines:
                     if l.replace(" ", "") == "\n" and len(__ilines) > 0:
@@ -179,9 +189,7 @@ class IpynbFile(JsonFile):
                     cell["cell_type"] = "code"
                     cell["metadata"] = {"language": "html"}
                     cell["source"] = cell["source"][1:-1]
-                elif (
-                    firstline.find(f"```markdown") >= 0 or firstline.find(f"```md") >= 0
-                ):
+                elif firstline.find(f"```markdown") >= 0 or firstline.find(f"```md") >= 0:
                     cell["cell_type"] = "code"
                     cell["metadata"] = {"language": "markdown"}
                     cell["source"] = cell["source"][1:-1]
@@ -216,9 +224,7 @@ class IpynbFile(JsonFile):
                 while flag:
                     n += 1
                     for line in cell["source"]:
-                        if line.replace(" ", "") != "\n" and not line.startswith(
-                            indent * n
-                        ):
+                        if line.replace(" ", "") != "\n" and not line.startswith(indent * n):
                             flag = False
                             print(n)
                             break
@@ -227,9 +233,7 @@ class IpynbFile(JsonFile):
                 if n > 0:
                     newlines = []
                     for line in cell["source"]:
-                        if line.replace(" ", "") != "\n" and line.startswith(
-                            indent * n
-                        ):
+                        if line.replace(" ", "") != "\n" and line.startswith(indent * n):
                             line = line[n:]
                         elif line.replace(" ", "") == "\n":
                             line = "\n"
@@ -333,9 +337,7 @@ class IpynbFile(JsonFile):
             newcells.append(icell)
             if icell["cell_type"] == "markdown" and icell["source"][0].find(flag) == 0:
                 # cell写入文件
-                newfile = self.filepath.replace(".ipynb", f"_{n}.ipynb").replace(
-                    " ", "_"
-                )
+                newfile = self.filepath.replace(".ipynb", f"_{n}.ipynb").replace(" ", "_")
                 n += 1
                 newcopy["cells"] = newcells[:-1]
                 JsonFile(newfile).write(newcopy)
@@ -511,9 +513,7 @@ class IpynbFile(JsonFile):
                         flag = False
                 if flag:
                     i["source"][-1] += "\n"
-                    i["source"].extend(
-                        ["\n", "//小编增加下方一行代码以支持 xue.cn 在线运行\n", "\n", "main()"]
-                    )
+                    i["source"].extend(["\n", "//小编增加下方一行代码以支持 xue.cn 在线运行\n", "\n", "main()"])
             newcells.append(i)
         filedata["cells"] = newcells
         self.write(filedata)

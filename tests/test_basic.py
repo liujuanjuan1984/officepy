@@ -1,6 +1,7 @@
 import os
-import pytest
 import sys
+
+import pytest
 
 
 class TestCase:
@@ -15,8 +16,7 @@ class TestCase:
         print(pys)
 
     def test_file(self):
-        from officy import File
-        from officy import IpynbFile
+        from officy import File, IpynbFile
 
         notes_dir = os.path.join(os.path.dirname(__file__), "..", "notes")
 
@@ -35,7 +35,7 @@ class TestCase:
 
         # File(xfile).copy_file_to_other_type(".md", ".log")
 
-        print(File("__init__.py").size())
+        print(File(__file__).size())
 
     def test_jsonfile(self):
         from officy import JsonFile
@@ -52,8 +52,9 @@ class TestCase:
         Img()
 
     def test_stime(self):
-        from officy import Stime
         import datetime
+
+        from officy import Stime
 
         Stime.ts2datetime(1644992740511809600)
         Stime.ts2datetime(1644992740511809)

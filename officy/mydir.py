@@ -1,6 +1,7 @@
 import os
-from typing import List, Dict
-from .jsonfile import JsonFile
+from typing import Dict, List
+
+from officy.jsonfile import JsonFile
 
 
 class Dir:

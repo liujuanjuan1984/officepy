@@ -1,4 +1,4 @@
-from .myfile import File
+from officy.myfile import File
 
 
 class CsvFile(File):

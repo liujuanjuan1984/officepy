@@ -1,8 +1,9 @@
+import copy
 import os
 import re
-import copy
-from .myfile import File
-from .jsonfile import JsonFile
+
+from officy.jsonfile import JsonFile
+from officy.myfile import File
 
 
 class MdFile(File):
@@ -36,9 +37,7 @@ class MdFile(File):
         for t in title:
             for l in link:
                 if l[0] == t[1]:
-                    data = data.replace(
-                        t[0] + t[1], t[0] + f"({l[2].strip()})"
-                    ).replace("".join(l), "")
+                    data = data.replace(t[0] + t[1], t[0] + f"({l[2].strip()})").replace("".join(l), "")
 
         # title1 = re.findall(r"(\[[^\]]+?\])[^:\(]", data)
         # link1 = re.findall(r"(\[[^\]]+?\])(:[ \n]{0,1})(http.+)", data)
@@ -101,17 +100,9 @@ class MdFile(File):
             # markdown 文本
             if i % 2 == 0:
                 if groups[i].strip("> ").startswith("```"):
-                    cells.extend(
-                        [
-                            i
-                            for i in groups[i].strip("> ")[3:].split("\n\n")
-                            if i.strip() != ""
-                        ]
-                    )
+                    cells.extend([i for i in groups[i].strip("> ")[3:].split("\n\n") if i.strip() != ""])
                 else:
-                    cells.extend(
-                        [i for i in groups[i].split("\n\n") if i.strip() != ""]
-                    )
+                    cells.extend([i for i in groups[i].split("\n\n") if i.strip() != ""])
             # code 文本
             else:
                 ind = re.findall(r"([> ]+?)```", groups[i])
@@ -172,9 +163,7 @@ class MdFile(File):
         """将一个脚本文件整体转换为 ipynb 文件，并将 文件名 作为标题，可运行的脚本转换为 code"""
         # n 控制文件标题, n=1 表示文件名作为标题名
         title = "/".join(self.filepath.rsplit("\\", n)[-n:])
-        path_structure = self.filepath.split(DIR_INFO["books"]["dev"] + "\\")[
-            -1
-        ].replace("\\", "/")
+        path_structure = self.filepath.split(DIR_INFO["books"]["dev"] + "\\")[-1].replace("\\", "/")
         _, filetype = os.path.splitext(self.filepath)
         source = self.filedata.expandtabs(4)
         data = {

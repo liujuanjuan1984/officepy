@@ -1,7 +1,7 @@
 import json
 import os
 import re
-from typing import List, Dict
+from typing import Dict, List
 
 
 class File:
@@ -116,7 +116,7 @@ class File:
             str: the data with json-quoted   formated.
         """
 
-        from .jsonfile import JsonFile
+        from officy.jsonfile import JsonFile
 
         tp = r"\n```json\n+([\s\S]+?)```"
         rs = re.findall(tp, data)
@@ -154,7 +154,7 @@ class File:
             size (int, optional): Each small file defaults to 256 Mb.
         """
 
-        from .mydir import Dir
+        from officy.mydir import Dir
 
         file_dir, file_name = os.path.split(self.filepath)
         file_name, file_type = os.path.splitext(file_name)
@@ -165,9 +165,7 @@ class File:
         stream = open(self.filepath, "rb")
 
         while True:
-            part_file_name = os.path.join(
-                file_dir, f"{file_name}_{file_num}{file_type}"
-            )
+            part_file_name = os.path.join(file_dir, f"{file_name}_{file_num}{file_type}")
             print(f"split file start {part_file_name}")
             part_stream = open(part_file_name, "wb")
 
@@ -196,10 +194,10 @@ class File:
         """获取文件大小
         n: 默认为2，取0为b，取1为Kb，取2为Mb，取3为Gb
         d：decimal 小数位，默认为2"""
-        return round(os.path.getsize(self.filepath) / (1024 **n), d)
+        return round(os.path.getsize(self.filepath) / (1024**n), d)
 
 
 if __name__ == "__main__":
     print(File(__file__).size())
     print(File(__file__).size(n=0))
-    print(File(__file__).size(n=3,d=5))
+    print(File(__file__).size(n=3, d=5))

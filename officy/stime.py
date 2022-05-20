@@ -1,8 +1,8 @@
 """自定义封装的特殊用途的 时间/日期相关方法"""
 
-import time
 import datetime
 import re
+import time
 
 
 class Stime:
@@ -24,7 +24,8 @@ class Stime:
             later = day + datetime.timedelta(days=n)
         else:
             raise ValueError(
-                day, "param type must be datetime.datetime datetime.date or string."
+                day,
+                "param type must be datetime.datetime datetime.date or string.",
             )
         return later
 
@@ -65,9 +66,7 @@ class Stime:
         return (24 * 60 * n.days + n.seconds / 60) / (days * 24 * 60)
 
     @classmethod
-    def view_percent(
-        cls, text, percent, wide=30, is_line=False, is_squre=True, is_ptext=True
-    ):
+    def view_percent(cls, text, percent, wide=30, is_line=False, is_squre=True, is_ptext=True):
         """
         把百分比转换为可视化进度条字符串
         text:str,文本

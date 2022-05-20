@@ -1,7 +1,8 @@
-import os
-import json
 import datetime
-from .jsonlist import JsonList
+import json
+import os
+
+from officy.jsonlist import JsonList
 
 
 class MyEncoder(json.JSONEncoder):
@@ -43,7 +44,7 @@ class JsonFile:
             raise ValueError(f"{self.filepath} {e}")
 
     def write(self, data, indent=1, is_cover=True):
-        from .mydir import Dir
+        from officy.mydir import Dir
 
         filepath = self.filepath
         if os.path.exists(self.filepath) and is_cover == False:
