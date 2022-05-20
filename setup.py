@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="officy",
-    version="0.0.2",
+    version="0.0.3",
     author="liujuanjuan1984",
     author_email="qiaoanlu@163.com",
     description="common python code for office use. like dir,file,etc.",
